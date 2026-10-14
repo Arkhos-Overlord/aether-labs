@@ -67,6 +67,9 @@ def make_favicon(size=256, ss=4):
     )
 
     # ---- white open-book glyph (two pages meeting at a center spine) ----
+    # Kept deliberately simple: at 16-32px the fine detail (page lines, dark
+    # inner border) blurs into noise, so the 32px must read as a clean
+    # silhouette. Fine strokes are skipped for the small size.
     glyph = Image.new("RGBA", (S, S), (0, 0, 0, 0))
     gdraw = ImageDraw.Draw(glyph)
     cx = S / 2
@@ -84,18 +87,9 @@ def make_favicon(size=256, ss=4):
             (cx + sign * S * 0.008, yb),                # bottom inner
         ]
         gdraw.polygon(pts, fill=(255, 255, 255, 255))
-        # thin accent-tinted page line for detail
-        ly = yt + S * 0.085
-        lx0 = cx + sign * S * 0.055
-        lx1 = outer - sign * S * 0.035
-        gdraw.line([(lx0, ly), (lx1, ly - S * 0.012)],
-                   fill=(79, 141, 255, 200), width=max(2, int(S * 0.012)))
 
     page(-1)
     page(+1)
-    # spine highlight
-    gdraw.line([(cx - S * 0.006, yt + S * 0.020), (cx, yb)],
-               fill=(255, 255, 255, 255), width=max(2, int(S * 0.016)))
     img = Image.alpha_composite(img, glyph)
 
     return img.resize((size, size), Image.LANCZOS)
@@ -145,9 +139,9 @@ def make_og():
     img = Image.alpha_composite(img, glow2)
     d = ImageDraw.Draw(img)
 
-    # hairline top border accent strip
-    d.rectangle([0, 0, W, 6], fill=ACCENT)
-    d.rectangle([0, 0, int(W * 0.28), 6], fill=ACCENT2)
+    # top accent strip (thick enough to survive feed downscaling)
+    d.rectangle([0, 0, W, 10], fill=ACCENT)
+    d.rectangle([0, 0, int(W * 0.28), 10], fill=ACCENT2)
 
     ML = 80  # left margin
 
@@ -162,24 +156,24 @@ def make_og():
     d.text((ML, 196), "Autonomous Ebook", font=f_head, fill=TEXT)
     d.text((ML, 296), "Production", font=f_head, fill=TEXT)
 
-    # subtext
+    # subtext (bright soft-white for contrast on dark; colon for flow)
     f_sub = ImageFont.truetype(FONT_REG, 34)
-    d.text((ML, 420), "One command. Topic to publication-ready ebook.",
-           font=f_sub, fill=SUBBLUE)
+    d.text((ML, 420), "One command: topic to publication-ready ebook.",
+           font=f_sub, fill=(214, 224, 240, 255))
 
-    # stat chips
-    f_chip = ImageFont.truetype(FONT_BOLD, 28)
+    # stat chips (larger font for mobile legibility)
+    f_chip = ImageFont.truetype(FONT_BOLD, 32)
     chips = ["40 books", "15 genres", "$0 cloud cost"]
     x = ML
     cy = 500
     for label in chips:
         tw = d.textlength(label, font=f_chip)
-        pad_x, ch_h = 26, 56
+        pad_x, ch_h = 30, 62
         cw = int(tw + pad_x * 2)
-        d.rounded_rectangle([x, cy, x + cw, cy + ch_h], radius=12,
+        d.rounded_rectangle([x, cy, x + cw, cy + ch_h], radius=13,
                             fill=(18, 24, 40, 255),
                             outline=ACCENT, width=2)
-        d.text((x + pad_x, cy + (ch_h - 34) // 2), label,
+        d.text((x + pad_x, cy + (ch_h - 40) // 2), label,
                font=f_chip, fill=TEXT)
         x += cw + 22
 
