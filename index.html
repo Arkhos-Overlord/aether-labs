@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aether Labs — Autonomous Ebook Production</title>
+<style>
+:root{
+  --bg:#0a0e1a; --card:#121828; --border:#1e2942; --text:#e6edf7; --muted:#8b9ab3;
+  --accent:#4f8dff; --accent2:#7c5cff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}
+.wrap{max-width:860px;margin:0 auto;padding:48px 24px}
+header{text-align:center;padding:40px 0}
+h1{font-size:2.6rem;font-weight:800;letter-spacing:-1px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.tagline{color:var(--muted);font-size:1.15rem;margin-top:8px}
+.hero{margin:40px 0;text-align:center}
+.hero p{color:var(--muted);font-size:1.05rem;max-width:640px;margin:0 auto}
+.cta{margin-top:20px}
+.cta a{display:inline-block;background:var(--accent);color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:0 6px}
+.cta a.ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:40px 0}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat .num{font-size:2rem;font-weight:800;color:var(--accent)}
+.stat .label{color:var(--muted);font-size:.85rem;margin-top:4px}
+h2{font-size:1.3rem;margin:40px 0 16px;font-weight:700}
+.pipe{display:flex;flex-direction:column;gap:10px}
+.step{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;padding:14px 18px}
+.step b{color:var(--accent)}
+.step p{color:var(--muted);font-size:.92rem;margin-top:2px}
+formats{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.fmt{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:6px 14px;font-size:.85rem;color:var(--muted)}
+footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:.85rem}
+code{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2px 8px;font-size:.85em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Aether Labs</h1>
+  <p class="tagline">Autonomous Ebook Production Engine</p>
+</header>
+
+<div class="hero">
+  <p>One command turns a single topic prompt into a publication-ready ebook —
+  EPUB, print-ready PDF, AI-generated cover, KDP upload package, and a Gumroad
+  listing. Built to remove the 60–120 hours of mechanical publishing work that
+  locks non-technical authors out of self-publishing.</p>
+  <div class="cta">
+    <a href="https://github.com/Arkhos-Overlord/apex">View the Engine</a>
+    <a class="ghost" href="mailto:contact@aetherlabs.dev">Contact</a>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="stat"><div class="num">40</div><div class="label">Books Generated</div></div>
+  <div class="stat"><div class="num">38</div><div class="label">Fully Packaged</div></div>
+  <div class="stat"><div class="num">15</div><div class="label">Genres</div></div>
+  <div class="stat"><div class="num">$0</div><div class="label">External Capital</div></div>
+</div>
+
+<h2>The Pipeline</h2>
+<div class="pipe">
+  <div class="step"><b>1. Content</b><p>LLM-driven outline and chapter generation with genre-specific templates and citation scrubbing — unbacked claims are removed, not hallucinated.</p></div>
+  <div class="step"><b>2. Formatting</b><p>Programmatic EPUB and print-ready PDF with automated validation against KDP upload specs: file size, metadata, link integrity, image dimensions.</p></div>
+  <div class="step"><b>3. Cover</b><p>Genre-aware template engine producing 1600×2560 KDP-standard covers at zero marginal cost. GPU-backed photoreal covers are the next upgrade.</p></div>
+  <div class="step"><b>4. Packaging</b><p>One-command KDP ZIP bundle (EPUB + PDF + cover + metadata) and a ready-to-sell Gumroad listing.</p></div>
+</div>
+
+<h2>Output Formats</h2>
+<formats>
+  <span class="fmt">EPUB 3</span>
+  <span class="fmt">Print-ready PDF</span>
+  <span class="fmt">KDP Upload ZIP</span>
+  <span class="fmt">Gumroad Listing</span>
+  <span class="fmt">1600×2560 Cover</span>
+  <span class="fmt">SQLite Catalog</span>
+</formats>
+
+<h2>Run It</h2>
+<div class="step"><code>python main.py make-book "Your Topic"</code><p>Outline → chapters → cover → format → package → catalog, in one invocation.</p></div>
+
+<footer>
+  <p>Aether Labs · Solo-founder built · Bootstrapped on ₹10,000 (~$120)</p>
+  <p>Local-first architecture — Ollama, no cloud lock-in, near-zero marginal cost per book.</p>
+</footer>
+
+</div>
+</body>
+</html>
