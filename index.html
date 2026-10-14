@@ -4,87 +4,195 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aether Labs — Autonomous Ebook Production</title>
+<meta name="description" content="Aether Labs turns a topic prompt into a publication-ready ebook — AI chapters, formatted EPUB and print PDF, a KDP-ready cover, and a Gumroad listing. One command, local-first, zero cloud lock-in.">
+<link rel="icon" type="image/png" sizes="32x32" href="/aether-labs/favicon-32.png">
+<link rel="icon" type="image/png" sizes="256x256" href="/aether-labs/favicon.png">
+<meta property="og:title" content="Aether Labs — Autonomous Ebook Production">
+<meta property="og:description" content="One command: topic prompt → EPUB, print PDF, cover, KDP package, Gumroad listing.">
+<meta property="og:image" content="https://arkhos-overlord.github.io/aether-labs/og-image.png">
+<meta property="og:url" content="https://arkhos-overlord.github.io/aether-labs/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Aether Labs — Autonomous Ebook Production">
+<meta name="twitter:description" content="One command: topic prompt → publication-ready ebook.">
+<meta name="twitter:image" content="https://arkhos-overlord.github.io/aether-labs/og-image.png">
 <style>
 :root{
-  --bg:#0a0e1a; --card:#121828; --border:#1e2942; --text:#e6edf7; --muted:#8b9ab3;
-  --accent:#4f8dff; --accent2:#7c5cff;
+  --bg:#0a0e1a; --card:#121828; --card2:#0d1424; --border:#2a3654;
+  --text:#e6edf7; --muted:#8b9ab3; --accent:#4f8dff; --accent-strong:#2563d6; --accent2:#7c5cff;
+  --code-text:#a8c4ff;
+  --text-xs:.8rem; --text-sm:.9rem; --text-base:1rem; --text-lg:1.15rem; --text-xl:1.45rem; --text-2xl:1.9rem; --text-3xl:2.5rem;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}
-.wrap{max-width:860px;margin:0 auto;padding:48px 24px}
-header{text-align:center;padding:40px 0}
-h1{font-size:2.6rem;font-weight:800;letter-spacing:-1px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.tagline{color:var(--muted);font-size:1.15rem;margin-top:8px}
-.hero{margin:40px 0;text-align:center}
-.hero p{color:var(--muted);font-size:1.05rem;max-width:640px;margin:0 auto}
-.cta{margin-top:20px}
-.cta a{display:inline-block;background:var(--accent);color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:600;margin:0 6px}
-.cta a.ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:40px 0}
-.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
-.stat .num{font-size:2rem;font-weight:800;color:var(--accent)}
-.stat .label{color:var(--muted);font-size:.85rem;margin-top:4px}
-h2{font-size:1.3rem;margin:40px 0 16px;font-weight:700}
-.pipe{display:flex;flex-direction:column;gap:10px}
-.step{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;padding:14px 18px}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;text-wrap:pretty}
+.wrap{max-width:880px;margin:0 auto;padding:48px 24px}
+a{color:var(--accent)}
+h1{font-size:var(--text-3xl);font-weight:800;letter-spacing:-1px;line-height:1.1}
+h2{font-size:var(--text-xl);margin:48px 0 16px;font-weight:700}
+
+/* HEADER + NAV */
+header{padding:40px 0 8px;text-align:center}
+.logo{display:inline-flex;align-items:center;gap:12px;margin-bottom:18px}
+.logo img{width:44px;height:44px;border-radius:10px;display:block}
+.logo span{font-size:var(--text-2xl);font-weight:800;letter-spacing:-.5px}
+.tagline{color:var(--muted);font-size:var(--text-lg);margin-top:6px}
+nav{display:flex;justify-content:center;gap:24px;margin:22px 0 8px;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:var(--text-sm);font-weight:500;transition:color .15s ease}
+nav a:hover{color:var(--text)}
+
+/* HERO */
+.hero{margin:36px 0 8px;text-align:center}
+.hero p{color:var(--muted);font-size:var(--text-lg);max-width:660px;margin:0 auto}
+.hero .lead{color:var(--text);font-weight:600}
+.audience{margin:22px auto 0;max-width:620px;color:var(--muted);font-size:var(--text-sm);text-align:center}
+.audience b{color:var(--text);font-weight:600}
+.cta{margin-top:26px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 26px;border-radius:8px;text-decoration:none;font-weight:600;font-size:var(--text-sm);transition:background .15s ease,transform .15s ease,border-color .15s ease}
+.btn-primary{background:var(--accent-strong);color:#fff}
+.btn-primary:hover{background:var(--accent);transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-ghost:hover{border-color:var(--accent);transform:translateY(-1px)}
+.btn:focus-visible,.stat:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* STATS */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:44px 0 8px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 16px;text-align:center;text-decoration:none;color:inherit;transition:border-color .15s ease,transform .15s ease}
+.stat:hover{border-color:var(--accent);transform:translateY(-2px)}
+.stat .num{font-size:var(--text-2xl);font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+.stat .label{color:var(--muted);font-size:var(--text-sm);margin-top:4px}
+
+/* PIPELINE */
+.pipe{display:flex;flex-direction:column;gap:12px}
+.step{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;padding:16px 20px;transition:border-left-color .15s ease}
+.step:hover{border-left-color:var(--accent2)}
 .step b{color:var(--accent)}
-.step p{color:var(--muted);font-size:.92rem;margin-top:2px}
-formats{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
-.fmt{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:6px 14px;font-size:.85rem;color:var(--muted)}
-footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:.85rem}
-code{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2px 8px;font-size:.85em}
+.step p{color:var(--muted);font-size:var(--text-sm);margin-top:2px}
+
+/* PRODUCT PROOF */
+.proof{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:16px 0}
+.proof figure{margin:0}
+.proof img{width:100%;border-radius:8px;border:1px solid var(--border);display:block;transition:transform .2s ease}
+.proof a{display:block;text-decoration:none}
+.proof a:hover img{transform:translateY(-3px)}
+.proof figcaption{color:var(--muted);font-size:var(--text-xs);margin-top:6px;text-align:center}
+
+/* FORMAT CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.chip{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:6px 14px;font-size:var(--text-xs);color:var(--muted)}
+
+/* CODE */
+.codewrap{margin-top:10px}
+code,pre{font-family:'SF Mono','Cascadia Code',Menlo,Consolas,monospace}
+pre.cmd{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:14px 18px;font-size:var(--text-sm);color:var(--code-text);overflow-x:auto}
+pre.cmd .c{color:var(--muted)}
+.demo{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:18px;font-size:var(--text-sm);color:var(--muted);overflow-x:auto}
+.demo .ok{color:#4ade80}
+
+/* FOUNDER NOTE */
+.founder{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-top:16px}
+.founder .name{font-weight:700;color:var(--text)}
+.founder .role{color:var(--accent);font-size:var(--text-sm)}
+.founder p{color:var(--muted);font-size:var(--text-sm);margin-top:8px}
+
+footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:var(--text-sm)}
+footer .note{margin-top:6px;font-size:var(--text-xs)}
+@media (max-width:600px){
+  .wrap{padding:32px 16px}
+  h1{font-size:2rem}
+  .cta{flex-direction:column;align-items:stretch;max-width:300px;margin-left:auto;margin-right:auto}
+  .btn{text-align:center}
+  nav{gap:16px}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <header>
-  <h1>Aether Labs</h1>
-  <p class="tagline">Autonomous Ebook Production Engine</p>
+  <div class="logo">
+    <img src="favicon.png" alt="Aether Labs logo" width="44" height="44">
+    <span>Aether Labs</span>
+  </div>
+  <p class="tagline">Publish a finished book in one command.</p>
+  <nav>
+    <a href="#proof">Proof</a>
+    <a href="#pipeline">How it works</a>
+    <a href="#run">Run it</a>
+    <a href="https://github.com/Arkhos-Overlord/ebook-engine">Engine on GitHub</a>
+  </nav>
 </header>
 
+<main>
 <div class="hero">
-  <p>One command turns a single topic prompt into a publication-ready ebook —
-  EPUB, print-ready PDF, AI-generated cover, KDP upload package, and a Gumroad
-  listing. Built to remove the 60–120 hours of mechanical publishing work that
-  locks non-technical authors out of self-publishing.</p>
+  <p class="lead">Aether Labs turns one topic into a publication-ready ebook: AI-drafted chapters, a formatted EPUB and print PDF, a genre-matched cover, a KDP upload package, and a Gumroad listing — from a single command, in minutes.</p>
+  <p class="audience"><b>Who it's for:</b> indie authors and publishers who want a manuscript-to-market pipeline without hiring a formatter or learning InDesign. <b>Not for:</b> people who want a tool that writes the book and does nothing else.</p>
+  <p class="audience">Built because the part of self-publishing that kills most authors isn't the writing — it's the 60–120 hours of formatting, cover design, and upload compliance that comes after it. This engine does that part.</p>
   <div class="cta">
-    <a href="https://github.com/Arkhos-Overlord/apex">View the Engine</a>
-    <a class="ghost" href="mailto:contact@aetherlabs.dev">Contact</a>
+    <a class="btn btn-primary" href="#proof">See the output</a>
+    <a class="btn btn-ghost" href="https://github.com/Arkhos-Overlord/ebook-engine">View the engine</a>
   </div>
 </div>
 
-<div class="grid">
-  <div class="stat"><div class="num">40</div><div class="label">Books Generated</div></div>
-  <div class="stat"><div class="num">38</div><div class="label">Fully Packaged</div></div>
+<div class="grid" id="proof-stats">
+  <a class="stat" href="#proof"><div class="num">40</div><div class="label">Books generated</div></a>
+  <a class="stat" href="#proof"><div class="num">38</div><div class="label">KDP-ready packages</div></a>
   <div class="stat"><div class="num">15</div><div class="label">Genres</div></div>
-  <div class="stat"><div class="num">$0</div><div class="label">External Capital</div></div>
+  <div class="stat"><div class="num">3s</div><div class="label">Topic → packaged (offline)</div></div>
 </div>
 
-<h2>The Pipeline</h2>
+<h2 id="proof">Real covers, from the engine</h2>
+<p class="audience" style="text-align:left;margin-bottom:14px">Every cover below was generated programmatically at 1600×2560 to KDP spec — no designer, no stock images.</p>
+<div class="proof">
+  <figure><a href="https://github.com/Arkhos-Overlord/ebook-engine"><img src="covers/cloud-computing-cover.png" alt="Cloud Computing cover generated by the engine" loading="lazy"></a><figcaption>Cloud Computing</figcaption></figure>
+  <figure><a href="https://github.com/Arkhos-Overlord/ebook-engine"><img src="covers/python-programming-cover.png" alt="Python Programming cover generated by the engine" loading="lazy"></a><figcaption>Python Programming</figcaption></figure>
+  <figure><a href="https://github.com/Arkhos-Overlord/ebook-engine"><img src="covers/cryptocurrency-cover.png" alt="Cryptocurrency cover generated by the engine" loading="lazy"></a><figcaption>Cryptocurrency</figcaption></figure>
+  <figure><a href="https://github.com/Arkhos-Overlord/ebook-engine"><img src="covers/indian-cooking-cover.png" alt="Indian Cooking cover generated by the engine" loading="lazy"></a><figcaption>Indian Cooking</figcaption></figure>
+  <figure><a href="https://github.com/Arkhos-Overlord/ebook-engine"><img src="covers/stock-trading-cover.png" alt="Stock Trading cover generated by the engine" loading="lazy"></a><figcaption>Stock Trading</figcaption></figure>
+  <figure><a href="https://github.com/Arkhos-Overlord/ebook-engine"><img src="covers/travel-cover.png" alt="Travel cover generated by the engine" loading="lazy"></a><figcaption>Travel</figcaption></figure>
+</div>
+
+<h2 id="pipeline">The pipeline</h2>
 <div class="pipe">
-  <div class="step"><b>1. Content</b><p>LLM-driven outline and chapter generation with genre-specific templates and citation scrubbing — unbacked claims are removed, not hallucinated.</p></div>
-  <div class="step"><b>2. Formatting</b><p>Programmatic EPUB and print-ready PDF with automated validation against KDP upload specs: file size, metadata, link integrity, image dimensions.</p></div>
-  <div class="step"><b>3. Cover</b><p>Genre-aware template engine producing 1600×2560 KDP-standard covers at zero marginal cost. GPU-backed photoreal covers are the next upgrade.</p></div>
-  <div class="step"><b>4. Packaging</b><p>One-command KDP ZIP bundle (EPUB + PDF + cover + metadata) and a ready-to-sell Gumroad listing.</p></div>
+  <div class="step"><b>1 · Draft</b><p>Outline and chapters generated from genre templates; unsupported claims are stripped, not hallucinated. Runs offline on the bundled corpus.</p></div>
+  <div class="step"><b>2 · Format</b><p>Validated EPUB and print-ready PDF that pass KDP's file-size, metadata, and image checks before you ever upload.</p></div>
+  <div class="step"><b>3 · Cover</b><p>Genre-aware covers at 1600×2560, built to KDP spec. Photoreal GPU-backed covers land in v2.</p></div>
+  <div class="step"><b>4 · Ship</b><p>One command produces the KDP ZIP and a Gumroad listing. You review, you publish.</p></div>
 </div>
 
-<h2>Output Formats</h2>
-<formats>
-  <span class="fmt">EPUB 3</span>
-  <span class="fmt">Print-ready PDF</span>
-  <span class="fmt">KDP Upload ZIP</span>
-  <span class="fmt">Gumroad Listing</span>
-  <span class="fmt">1600×2560 Cover</span>
-  <span class="fmt">SQLite Catalog</span>
-</formats>
+<h2>Output formats</h2>
+<div class="chips">
+  <span class="chip">EPUB 3</span>
+  <span class="chip">Print-ready PDF</span>
+  <span class="chip">KDP upload ZIP</span>
+  <span class="chip">Gumroad listing</span>
+  <span class="chip">1600×2560 cover</span>
+  <span class="chip">SQLite catalog</span>
+</div>
 
-<h2>Run It</h2>
-<div class="step"><code>python main.py make-book "Your Topic"</code><p>Outline → chapters → cover → format → package → catalog, in one invocation.</p></div>
+<h2 id="run">Run it</h2>
+<div class="codewrap">
+<pre class="cmd"><span class="c"># topic → chapters → cover → format → package → catalog, one invocation</span>
+python main.py make-book "Cloud Computing" Technical</pre>
+</div>
+<div class="demo" style="margin-top:12px">
+<span class="ok">✓ generate (0s)</span> &nbsp; <span class="ok">✓ publish (1s)</span><br>
+chapters=5 &nbsp; cover=1600×2560 &nbsp; epub=valid &nbsp; pdf=valid &nbsp; repeats=0<br>
+<span class="c">Offline corpus build: full KDP + Gumroad package in ~3s.</span>
+</div>
+
+<h2>Who builds this</h2>
+<div class="founder">
+  <div class="name">NEYAN</div>
+  <div class="role">Solo founder &amp; engineer</div>
+  <p>I built Aether Labs end-to-end on ₹10,000 (~$120) of founder capital to remove the mechanical work that keeps non-technical authors off KDP. It runs local-first on Ollama — no cloud lock-in, near-zero cost per book. Next: GPU-backed photoreal covers and a web interface for non-developers.</p>
+</div>
+</main>
 
 <footer>
   <p>Aether Labs · Solo-founder built · Bootstrapped on ₹10,000 (~$120)</p>
-  <p>Local-first architecture — Ollama, no cloud lock-in, near-zero marginal cost per book.</p>
+  <p class="note">Local-first by design: runs on Ollama, no cloud dependency, near-zero cost per book.</p>
 </footer>
 
 </div>
